@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   description: "নিত্যপ্রয়োজনীয় পণ্যের দাম এক নজরে",
 };
 
+// Navbar-এ session check আছে (runtime data) — তাই route dynamic render হবে
+export const instant = false;
+
 export default function RootLayout({
   children,
 }: {

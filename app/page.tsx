@@ -1,4 +1,5 @@
 import ProductCard, { type Product } from "@/components/ProductCard";
+import BanglaDate from "@/components/BanglaDate";
 import { toBn } from "@/lib/format";
 const API = "https://openapi.programming-hero.com/api/bazardor";
 
@@ -16,14 +17,6 @@ export default async function Home() {
     .sort((a, b) => a.change.pct - b.change.pct)
     .slice(0, 6);
 
-  const today = new Date();
-  const banglaDate = today.toLocaleDateString("bn-BD", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-12">
       {/* 🅱️ Hero / Banner Section */}
@@ -33,7 +26,7 @@ export default async function Home() {
         <div className="flex-1 space-y-4">
           {/* Eyebrow badge */}
           <span className="inline-block px-3.5 py-1 rounded-full text-xs sm:text-sm font-medium bg-[#eaf5ed] text-[#0d783d]">
-            {banglaDate}
+            <BanglaDate />
           </span>
 
           {/* Main Heading */}

@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import SignOutButton from "@/components/SignOutButton";
 import UserMenu from "@/components/UserMenu";
+import BanglaDate from "@/components/BanglaDate";
 
 type Category = {
   id: string;
@@ -24,14 +25,6 @@ export default async function Navbar() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-
-  const today = new Date();
-  const banglaDate = today.toLocaleDateString("bn-BD", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       {/* Row 1: Logo + Auth */}
@@ -42,7 +35,7 @@ export default async function Navbar() {
           </div>
           <div className="flex flex-col leading-tight">
             <span className="text-lg font-bold text-gray-900 tracking-tight">বাজার দর</span>
-            <span className="text-xs text-gray-500">{banglaDate}</span>
+            <span className="text-xs text-gray-500"><BanglaDate /></span>
           </div>
         </Link>
 
