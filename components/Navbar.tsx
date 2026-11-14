@@ -1,4 +1,8 @@
 import Link from "next/link";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
+import SignOutButton from "@/components/SignOutButton";
+import UserMenu from "@/components/UserMenu";
 
 type Category = {
   id: string;
@@ -16,6 +20,10 @@ async function getCategories() {
 
 export default async function Navbar() {
   const categories = await getCategories();
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   const today = new Date();
   const banglaDate = today.toLocaleDateString("bn-BD", {
@@ -38,20 +46,24 @@ export default async function Navbar() {
           </div>
         </Link>
 
-        <div className="flex items-center gap-2 shrink-0">
-          <Link
-            href="/signin"
-            className=" border-[#0f8a44] text-[#0f8a44] hover:bg-[#eaf5ed] px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors"
-          >
-            সাইন ইন
-          </Link>
-          <Link
-            href="/signup"
-            className="bg-[#0f8a44] hover:bg-[#0b6e35] text-white px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors shadow-sm"
-          >
-            সাইন আপ
-          </Link>
-        </div>
+        {session ? (
+          <UserMenu name={session.user.name ?? ""} email={session.user.email ?? ""} />
+        ) : (
+          <div className="flex items-center gap-2 shrink-0">
+            <Link
+              href="/signin"
+              className="border border-[#0f8a44] text-[#0f8a44] hover:bg-[#eaf5ed] px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors"
+            >
+              সাইন ইন
+            </Link>
+            <Link
+              href="/signup"
+              className="bg-[#0f8a44] hover:bg-[#0b6e35] text-white px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors shadow-sm"
+            >
+              সাইন আপ
+            </Link>
+          </div>
+        )}
       </div>
 
       {/* Row 2: Categories */}
