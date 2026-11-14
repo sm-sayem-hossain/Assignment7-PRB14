@@ -38,9 +38,19 @@ export default async function Navbar() {
           </div>
         </Link>
 
-        <div className="flex gap-2 shrink-0">
-          <Link href="/signin" className="btn btn-sm btn-outline btn-success">সাইন ইন</Link>
-          <Link href="/signup" className="btn btn-sm btn-success text-white">সাইন আপ</Link>
+        <div className="flex items-center gap-2 shrink-0">
+          <Link
+            href="/signin"
+            className=" border-[#0f8a44] text-[#0f8a44] hover:bg-[#eaf5ed] px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors"
+          >
+            সাইন ইন
+          </Link>
+          <Link
+            href="/signup"
+            className="bg-[#0f8a44] hover:bg-[#0b6e35] text-white px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors shadow-sm"
+          >
+            সাইন আপ
+          </Link>
         </div>
       </div>
 
