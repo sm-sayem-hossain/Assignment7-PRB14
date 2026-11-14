@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -11,6 +11,19 @@ export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Protected route থেকে redirect হয়ে এলে toast দেখাও
+  // আর কোথা থেকে এসেছে সেটা মনে রাখো — login শেষে সেখানেই ফেরত
+  const [returnTo, setReturnTo] = useState("/");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("protected") === "1") {
+      toast.error("পণ্যের বিস্তারিত দেখতে প্রথমে সাইন ইন করুন");
+    }
+    const from = params.get("from");
+    if (from) setReturnTo(from);
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -25,7 +38,7 @@ export default function SignInPage() {
       toast.error(error.message ?? "সাইন ইন ব্যর্থ হয়েছে");
     } else {
       toast.success("সাইন ইন সফল! স্বাগতম 🎉");
-      router.push("/");
+      router.push(returnTo);
     }
 
     setLoading(false);

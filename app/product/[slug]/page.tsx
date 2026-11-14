@@ -1,6 +1,8 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { type Product } from "@/components/ProductCard";
+import { auth } from "@/lib/auth";
 import { toBn, unitBn } from "@/lib/format";
 
 const API = "https://openapi.programming-hero.com/api/bazardor";
@@ -17,6 +19,14 @@ export default async function ProductDetailsPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+
+  // 🔒 Protected route — login না থাকলে signin-এ পাঠাও
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session) {
+    redirect(`/signin?protected=1&from=/product/${slug}`);
+  }
 
   // NOTE: single-product endpoint শুধু id দিয়ে কাজ করে,
   // slug দিয়ে নয় — তাই সব product এনে slug মিলিয়ে খুঁজি
