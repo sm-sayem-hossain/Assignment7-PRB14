@@ -19,6 +19,9 @@ async function getCategories() {
     return categories;
 }
 
+// <marquee> পুরনো HTML tag — TypeScript-এর JSX টাইপে নেই, তাই alias
+const Marquee = "marquee" as unknown as React.ElementType;
+
 export default async function Navbar() {
   const categories = await getCategories();
 
@@ -77,7 +80,7 @@ export default async function Navbar() {
 
       {/* Row 3: Price Ticker */}
       <div className="bg-gray-50 border-y border-gray-200 text-gray-700 text-xs py-2 overflow-hidden">
-        <marquee className="flex items-center">
+        <Marquee className="flex items-center">
           <span className="inline-flex items-center gap-1.5 px-3">
             🍚 স্বর্ণমাছি চাল ৫৪ টাকা/কেজি <span className="text-red-500 font-bold">▲ ২.১%</span>
           </span>
@@ -105,7 +108,7 @@ export default async function Navbar() {
           <span className="inline-flex items-center gap-1.5 px-3">
             🍗 ব্রয়লার মুরগি ১৭৫ টাকা/কেজি <span className="text-red-500 font-bold">▲ ১.২%</span>
           </span>
-        </marquee>
+        </Marquee>
       </div>
     </header>
   );

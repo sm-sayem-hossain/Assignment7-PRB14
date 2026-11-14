@@ -1,6 +1,6 @@
 const bnDigits = "০১২৩৪৫৬৭৮৯";
 
-export function toBn(num: number): string {
+export function toBn(num: number | string): string {
   return num.toString().replace(/\d/g, (d) => bnDigits[Number(d)]);
 }
 
